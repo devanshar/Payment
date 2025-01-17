@@ -20,7 +20,7 @@ const authenticatemiddleware = (req,res,next)=>{
     }
 }
 
-module.export={
+module.exports={
     authenticatemiddleware
 }
 
