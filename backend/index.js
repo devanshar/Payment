@@ -10,7 +10,7 @@ dotenv.config();
 app.use(cors());
 app.use(express.json());
 
-app.arguments("api/v1",mainRouter);
+app.use("api/v1",mainRouter);
 
 // api/v1/user/signup
 // api/v1/user/signin

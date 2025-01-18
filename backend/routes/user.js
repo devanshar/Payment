@@ -1,8 +1,9 @@
 const express = require("express");
 const zod= require("zod");
-const {User} = require("../db")
+const {User,Account} = require("../db")
 const jwt = require("jsonwebtoken");
 const {JWT_SECRET} = require("../config");
+const { authenticatemiddleware } = require("../middleware");
 const router = express.Router();
 
 const signup = zod.object({
@@ -15,6 +16,12 @@ const signup = zod.object({
 const signin = zod.object({
     username:zod.string().email(),
     password:zod.string()
+})
+
+const updatebody = zod.object({
+    password:zod.string().optional(),
+    firstName:zod.string().optional(),
+    lastName:zod.string().optional(),
 })
 
 
@@ -43,13 +50,13 @@ router.post("/signup",async (req,res)=>{
         lastName: req.body.lastName,
     })
     const userId = user._id;
-
+//___________________________
     await Account.create({
         userId,
         balance: 1 + Math.random() * 10000
     })
 
-
+//_______________________________________
     const token = jwt.sign({
         userId
     }, JWT_SECRET);
@@ -91,6 +98,50 @@ router.post("/signin",async (req,res)=>{
 
     res.status(411).json({
         message: "Error while logging in"
+    })
+}),
+
+router.put("/",authenticatemiddleware, async (req,res)=>{
+    const body = req.body;
+    const{success} = updatebody.safeParse(body);
+
+    if(!success){
+        res.status(411).json({
+            message :"Error while updating "
+        })
+    }
+
+    await User.updateOne(req.body,{
+        id:req.userId             // doubt
+    })
+
+    res.json({
+        message :" Updated Successfully"
+    })
+})
+
+router.get("/bulk", async (req, res) => {
+    const filter = req.query.filter || "";
+
+    const users = await User.find({
+        $or: [{  
+            firstName: {
+                "$regex": filter
+            }
+        }, {
+            lastName: {
+                "$regex": filter
+            }
+        }]
+    })
+
+    res.json({
+        user: users.map(user => ({
+            username: user.username,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            _id: user._id
+        }))
     })
 })
 module.exports = router;
