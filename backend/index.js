@@ -10,16 +10,7 @@ dotenv.config();
 app.use(cors());
 app.use(express.json());
 
-app.use("api/v1",mainRouter);
-
-// api/v1/user/signup
-// api/v1/user/signin
-// api/v1/user/chnagepassword..
-
-
-// api/v1/account/transfermoney
-// api/v1/user/balance
-
+app.use("/api/v1",mainRouter);
 
 app.listen(port,()=>{
     console.log("Less Goo server is on : 3000");

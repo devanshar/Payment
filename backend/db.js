@@ -18,26 +18,25 @@ const UserSchema = new mongoose.Schema({
         minLength: 6,
         required: true
     }  ,  
-    firstname:{
+    firstName:{
         type:String,
         default:"Yourname",
         maxLength: 50,
         trim:true,
         required: true
     },    
-    Lastname:{
-        type:String,
-        required: true
+    lastName:{
+        type:String
     }
 });
 
 const accountSchema = mongoose.Schema({
-    userid : {
+    userId : {
         type : mongoose.Types.ObjectId,
         ref : "User",
         required : true
     },
-    banlance :{
+    balance :{
         type : Number,
         required : true
     }

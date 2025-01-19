@@ -4,11 +4,12 @@ const {User,Account} = require("../db")
 const jwt = require("jsonwebtoken");
 const {JWT_SECRET} = require("../config");
 const { authenticatemiddleware } = require("../middleware");
+
 const router = express.Router();
 
 const signup = zod.object({
     username:zod.string().email(),
-    firtsName:zod.string(),
+    firstName:zod.string(),
     lastName: zod.string(),
 	password: zod.string()
 });
@@ -26,16 +27,18 @@ const updatebody = zod.object({
 
 
 router.post("/signup",async (req,res)=>{
-    const body = req.body;
+    // const body = req.body;
+
     const {success} = signup.safeParse(req.body);
+
     if(!success){
         return res.json({
-            message : "Email Already Taken /Incorrect Inputs"
+            message : "Incorrect Inputs"
         })
     }
 
     const useragain = User.findOne({
-        username : body.username
+        username : req.body.username
     })
 
     if(useragain._id){
@@ -78,12 +81,13 @@ router.post("/signin",async (req,res)=>{
     }
 
     const useragain = User.findOne({
-        username : req.body.username
+        username : req.body.username,
+        password: req.body.password
     })
 
     if(useragain){
         
-    const userId = user._id;
+    const userId = useragain._id;
 
     const token = jwt.sign({
         userId
