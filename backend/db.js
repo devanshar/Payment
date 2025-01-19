@@ -4,8 +4,6 @@ dotenv.config();
 
 mongoose.connect(process.env.DB);
 
-// console.log(process.env.DB);
-
 const UserSchema = new mongoose.Schema({
     username:{
         type:String,
