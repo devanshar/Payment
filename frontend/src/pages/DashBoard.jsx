@@ -30,7 +30,7 @@ export const Dashboard = () => {
   }, []);
 
   return (
-    <div className="absolute top-0 z-[-2] h-screen w-screen bg-[#000000] bg-[radial-gradient(#ffffff33_1px,#00091d_1px)] bg-[size:20px_20px] z-0">
+    <div className="absolute top-0 z-[-2] h-screen w-screen bg-[#000000] bg-[radial-gradient(#ffffff33_1px,#00091d_1px)] bg-[size:20px_20px]">
       <Appbar />
       <div className="m-8 text-white">
         {loading ? (

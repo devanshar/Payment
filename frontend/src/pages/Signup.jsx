@@ -14,7 +14,7 @@ export const Signup = () => {
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
 
-    return   <div class="absolute top-0 z-[-2] h-screen w-screen bg-[#000000] bg-[radial-gradient(#ffffff33_1px,#00091d_1px)] bg-[size:20px_20px] z-0">
+    return   <div class="absolute top-0 z-[-2] h-screen w-screen bg-[#000000] bg-[radial-gradient(#ffffff33_1px,#00091d_1px)] bg-[size:20px_20px] ">
     <div className=" h-screen flex justify-center z-10">
     <div className="flex flex-col justify-center z-10 ">
       <div className="rounded-lg bg-black w-80 text-center p-2 h-max px-4 border-2 border-amber-100">
